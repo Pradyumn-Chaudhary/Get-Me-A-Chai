@@ -74,6 +74,7 @@ export const fetchsearch = async (prefix) => {
   const users = await User.find({
     username: { $regex: `^${prefix}`, $options: "i" }, // Case-insensitive search
   })
+    .select("username profilepic bio")
     .limit(5)
     .lean();
   return users;

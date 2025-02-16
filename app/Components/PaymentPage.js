@@ -97,7 +97,7 @@ const PaymentPage = ({ username }) => {
         <img src={currentUser.profilepic} alt="" className="rounded-full object-cover w-full h-full" />
       </div>
       <div className="flex flex-col items-center mt-[110px]">
-        <div className="font-bold">{currentUser.name}</div>
+        <div className="font-bold">@{currentUser.username}</div>
         <div className="text-sm text-slate-500">
           {currentUser.bio}
         </div>

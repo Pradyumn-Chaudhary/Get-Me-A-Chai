@@ -1,13 +1,13 @@
 import React from 'react'
 import PaymentPage from '../Components/PaymentPage'
 import { notFound } from "next/navigation"
-import connectDb from '@/db/connectDB'
+import connectDB from '@/db/connectDB'
 import User from '@/models/User'
 const Username = async ({ params }) => {
 
   // If the username is not present in the database, show a 404 page
   const checkUser = async () => {
-    await connectDb()
+    await connectDB()
     let u = await User.findOne({ username: params.username })
     if (!u) {
       return notFound()

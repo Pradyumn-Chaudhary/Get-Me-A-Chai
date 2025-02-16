@@ -75,7 +75,7 @@ export const fetchsearch = async (prefix) => {
     username: { $regex: `^${prefix}`, $options: "i" }, // Case-insensitive search
   })
     .select("username profilepic bio")
-    .limit(5)
+    .limit(7)
     .lean();
   return users;
 };

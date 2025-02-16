@@ -1,30 +1,38 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { usePathname,useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
-import { fetchsearch} from "@/actions/useractions";
+import { fetchsearch } from "@/actions/useractions";
 const Navbar = () => {
   const { data: session } = useSession();
   const pathname = usePathname();
   const router = useRouter();
   const [showDropdown, setshowDropdown] = useState(false);
-  const [prefix, setprefix] = useState("")
-  const [search, setsearch] = useState([])
-  
-  useEffect(() => {
-    getUsers()
-  }, [prefix])
+  const [prefix, setprefix] = useState("");
+  const [search, setsearch] = useState([]);
 
-  const getUsers = async() => {
-    let u = await fetchsearch(prefix)
-    setsearch(u)
+  const handleSearch = (username) => {
+    setprefix("")
+    router.push(`/${username}`)
   }
-  
+
+  useEffect(() => {
+    getUsers();
+  }, [prefix]);
+
+  const getUsers = async () => {
+    let u = await fetchsearch(prefix);
+    setsearch(u);
+  };
+
   return (
     <nav className="bg-gray-900 text-white flex justify-between items-center px-4 h-16">
       <Link href={"/"}>
-        <div className="logo font-bold text-lg flex items-center"  onClick={() => setshowDropdown(false)}>
+        <div
+          className="logo font-bold text-lg flex items-center"
+          onClick={() => setshowDropdown(false)}
+        >
           <img
             className="mb-2 invert-[0.23]"
             width={40}
@@ -37,7 +45,7 @@ const Navbar = () => {
       <div className="flex">
         {session && (
           <div className="flex gap-5 w-full items-center">
-           {pathname === "/" &&  <div className="relative max-w-md mx-auto w-full hidden sm:block">
+            <div className="relative max-w-md mx-auto w-full hidden sm:block">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
                   className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -60,31 +68,41 @@ const Navbar = () => {
                 id="default-search"
                 value={prefix}
                 name="prefix"
-                onChange={(e)=>setprefix(e.target.value)}
+                onChange={(e) => setprefix(e.target.value)}
                 className="block w-auto p-4 py-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search by username"
                 required
               />
-              {(prefix && search.length > 0 || search.length === 0) && (
+              {((prefix && search.length > 0) || search.length === 0) && (
                 <div className="absolute z-10 w-full mt-2 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-auto">
-                    {search.length > 0 ? (
-                        search.map((user) => (
-                            <div key={user.username} className="p-2 hover:bg-gray-100 text-black cursor-pointer flex gap-2" onClick={()=>router.push(`/${user.username}`)}>
-                            <div>
-                            <img src={user.profilepic} alt="dp" className="rounded-full object-cover w-full h-full" />
-                            </div>
-                            <div className="flex flex-col">
-                              <h3 className="text-[14px] font-bold">@{user.username}</h3>
-                              <span className="text-[8px]">{ user.bio}</span>
-                            </div>
-                            </div>
-                        ))
-                    ) : (
-                        <div className="p-2 text-gray-500">No users found</div>
-                    )}
+                  {search.length > 0 ? (
+                    search.map((user) => (
+                      <div
+                        key={user.username}
+                        className="p-2 hover:bg-gray-100 text-black cursor-pointer flex gap-2"
+                        onClick={() => handleSearch(user.username)}
+                      >
+                        <div>
+                          <img
+                            src={user.profilepic}
+                            alt="dp"
+                            className="rounded-full object-cover w-full h-full"
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <h3 className="text-[14px] font-bold">
+                            @{user.username}
+                          </h3>
+                          <span className="text-[8px]">{user.bio}</span>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="p-2 text-gray-500">No users found</div>
+                  )}
                 </div>
-            )}
-            </div>}
+              )}
+            </div>
 
             <div className="relative w-full">
               <button
@@ -122,7 +140,7 @@ const Navbar = () => {
                   aria-labelledby="dropdownDefaultButton"
                   onClick={() => setshowDropdown(false)}
                 >
-                   <li>
+                  <li>
                     <Link
                       href="/search"
                       className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white sm:hidden"

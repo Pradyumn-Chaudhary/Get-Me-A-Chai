@@ -25,11 +25,11 @@ const page = () => {
 
   return (
     <div className="text-white container mx-auto py-10">
-      <h1 className="font-bold text-2xl text-center">
+      <h1 className="font-bold px-7 text-xl sm:text-2xl text-center">
         Login to get your people to support you
       </h1>
 
-      <div className="social-login flex flex-col gap-2 min-h-screen items-center p-10">
+      <div className="social-login flex flex-col gap-2 min-h-screen items-center p-4 sm:p-10">
         <button
           className="w-64 flex items-center bg-white border border-gray-300 rounded-lg shadow-md max-w-xs px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           onClick={() => signIn("google")}

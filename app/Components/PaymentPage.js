@@ -8,7 +8,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 const PaymentPage = ({ username }) => {
-  const { data: session ,status} = useSession();
+  const { data: session, status } = useSession();
   const [paymentform, setpaymentform] = useState({
     name: "",
     message: "",
@@ -19,23 +19,21 @@ const PaymentPage = ({ username }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-
   useEffect(() => {
     getData();
   }, []);
 
   useEffect(() => {
     if (status != "loading" && !session) {
-    router.push("/login")
-  }
-}, [session,router])
-
+      router.push("/login");
+    }
+  }, [session, router]);
 
   useEffect(() => {
     if (searchParams.get("paymentdone") == "true") {
       // Display the success toast if session exists and paymentdone is true
       toast.success("Thanks for your payment!");
-      router.push(`${username}`)
+      router.push(`${username}`);
     }
   }, []); // Dependency array to trigger effect when `session` changes
 
@@ -86,27 +84,40 @@ const PaymentPage = ({ username }) => {
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js"></Script>
       <ToastContainer />
+
       <div className="cover w-full">
         <img
           src={currentUser.coverpic}
-          alt=""
+          alt="Cover"
           className="object-cover w-full h-[50vh]"
         />
       </div>
-      <div className="border-white border-2 absolute top-[45vh] left-[42vw] rounded-full w-[200px] h-[200px] flex items-center justify-center">
-        <img src={currentUser.profilepic} alt="" className="rounded-full object-cover w-full h-full" />
+
+      <div
+        className="absolute top-[60vh] left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center rounded-full bg-transparent border-white border-2 
+  w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] md:w-[180px] md:h-[180px] lg:w-[200px] lg:h-[200px]"
+      >
+        <img
+          src={currentUser.profilepic}
+          alt="Profile"
+          className="rounded-full object-cover w-full h-full"
+        />
       </div>
-      <div className="flex flex-col items-center mt-[110px]">
+
+      <div className="flex flex-col items-center mt-[55px] sm:mt-[65px] md:mt-[95px]">
         <div className="font-bold">@{currentUser.username}</div>
-        <div className="text-sm text-slate-500">
+        <div className="text-sm text-slate-500 text-center">
           {currentUser.bio}
         </div>
-        <div className="text-sm text-slate-500">{Payments.length} Payments • ₹{Payments.reduce((total, payment) => total + payment.amount, 0)} raised
+        <div className="text-sm text-slate-500">
+          {Payments.length} Payments • ₹
+          {Payments.reduce((total, payment) => total + payment.amount, 0)}{" "}
+          raised
         </div>
       </div>
 
-      <div className="payment flex w-[85%] justify-center gap-3 mx-auto my-7 h-[80vh]">
-        <div className="supporter w-full bg-slate-900 text-left p-10 overflow-auto">
+      <div className="payment flex flex-col-reverse md:flex-row w-[95%]  justify-center gap-3 mx-auto my-7 md:h-[80vh]">
+        <div className="supporter w-full bg-slate-900 text-left p-10 overflow-auto h-[80vh]">
           <h2 className="font-bold text-2xl mb-3">Supporters</h2>
           {Payments.length > 0 ? (
             Payments.map((p, i) => (
@@ -152,7 +163,7 @@ const PaymentPage = ({ username }) => {
               placeholder="Enter amount"
               className="bg-slate-800 rounded-xl w-full p-3"
             />
-
+            <span className=" text-[12px]">*All fields are required</span>
             <button
               onClick={() => pay(paymentform.amount)}
               type="button"
@@ -168,19 +179,19 @@ const PaymentPage = ({ username }) => {
           </div>
           <div className="flex gap-2 mt-3">
             <button
-              className="bg-slate-800 py-3 px-6 rounded-xl"
+              className="bg-slate-800 p-3 md:px-6 rounded-xl"
               onClick={() => setpaymentform({ ...paymentform, amount: "100" })}
             >
               ₹100
             </button>
             <button
-              className="bg-slate-800 py-3 px-6 rounded-xl"
+              className="bg-slate-800 p-3 md:px-6 rounded-xl"
               onClick={() => setpaymentform({ ...paymentform, amount: "200" })}
             >
               ₹200
             </button>
             <button
-              className="bg-slate-800 py-3 px-6 rounded-xl"
+              className="bg-slate-800 p-3 md:px-6 rounded-xl"
               onClick={() => setpaymentform({ ...paymentform, amount: "500" })}
             >
               ₹500

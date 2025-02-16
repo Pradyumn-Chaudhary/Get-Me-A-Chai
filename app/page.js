@@ -41,11 +41,11 @@ export default function Home() {
         </div>
       </div>
       <div className="h-1 opacity-10 bg-white"></div>
-      <div className="text-white h-[50vh] flex flex-col justify-center">
+      <div className="text-white sm:h-[50vh] flex flex-col justify-center">
         <h2 className="text-2xl font-bold text-center my-3">
           Your People Can Buy You a Chai
         </h2>
-        <div className="flex gap-5 justify-evenly">
+        <div className="flex flex-col sm:flex-row gap-5 justify-evenly">
           <div className="item flex flex-col items-center text-center">
             <Image
               className="bg-slate-400 p-1 rounded-full mb-2"
@@ -68,7 +68,7 @@ export default function Home() {
             <p className="font-bold">People Wants To Help</p>
             <p>Your Friends are Available for you</p>
           </div>
-          <div className="item flex flex-col items-center text-center">
+          <div className="item flex flex-col items-center text-center mb-2">
             <Image
               className="bg-slate-400 p-1 rounded-full mb-2"
               width={100}

@@ -10,6 +10,7 @@ export const metadata = {
   title: "Get me a Chai : A website for contributing to the chai community",
   description:
     "Get me a Chai is a website for contributing to the chai community",
+  icons:"/favicon.ico"
 };
 
 export default function RootLayout({ children }) {

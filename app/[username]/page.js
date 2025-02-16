@@ -5,10 +5,12 @@ import connectDB from '@/db/connectDB'
 import User from '@/models/User'
 const Username = async ({ params }) => {
 
+  const { username } = params
+  
   // If the username is not present in the database, show a 404 page
   const checkUser = async () => {
     await connectDB()
-    let u = await User.findOne({ username: params.username })
+    let u = await User.findOne({username })
     if (!u) {
       return notFound()
     }
@@ -19,7 +21,7 @@ const Username = async ({ params }) => {
 
   return (
     <>
-      <PaymentPage username={params.username} />
+      <PaymentPage username={username} />
     </>
   )
 }
@@ -27,7 +29,8 @@ const Username = async ({ params }) => {
 export default Username
  
 export async function generateMetadata({ params }) {
+  const { username } = params
   return {
-    title: `Support ${params.username} - Get Me A Chai`,
+    title: `Support ${username} - Get Me A Chai`,
   }
 }

@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { SessionProvider } from "next-auth/react";
 import { usePathname,useRouter } from "next/navigation";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import { fetchsearch} from "@/actions/useractions";
 const Navbar = () => {
@@ -38,7 +37,7 @@ const Navbar = () => {
       <div className="flex">
         {session && (
           <div className="flex gap-5 w-full items-center">
-           {pathname === "/" &&  <div className="relative max-w-md mx-auto w-full">
+           {pathname === "/" &&  <div className="relative max-w-md mx-auto w-full hidden sm:block">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
                   className="w-4 h-4 text-gray-500 dark:text-gray-400"
@@ -123,6 +122,14 @@ const Navbar = () => {
                   aria-labelledby="dropdownDefaultButton"
                   onClick={() => setshowDropdown(false)}
                 >
+                   <li>
+                    <Link
+                      href="/search"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white sm:hidden"
+                    >
+                      Search
+                    </Link>
+                  </li>
                   <li>
                     <Link
                       href="/dashboard"

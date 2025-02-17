@@ -82,7 +82,7 @@ const Navbar = () => {
                         className="p-2 hover:bg-gray-100 text-black cursor-pointer flex gap-2"
                         onClick={() => handleSearch(user.username)}
                       >
-                        <div>
+                        <div className="w-9 h-9">
                           <img
                             src={user.profilepic}
                             alt="dp"
